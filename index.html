@@ -2,24 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Access Protected Record</title>
+  <title>Access Your Record</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 40px;
       text-align: center;
+      padding-top: 80px;
+      background: #f4f4f4;
     }
 
-    h2 {
-      margin-bottom: 20px;
+    .box {
+      background: #fff;
+      padding: 30px;
+      margin: auto;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     input[type="text"] {
       padding: 10px;
       font-size: 16px;
-      width: 250px;
-      margin-right: 10px;
+      width: 80%;
+      margin-bottom: 20px;
     }
 
     button {
@@ -32,43 +37,37 @@
       cursor: pointer;
     }
 
-    #embed-container {
-      margin-top: 40px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
+    button:hover {
+      background-color: #005fa3;
     }
   </style>
 </head>
 <body>
 
-  <h2>Enter Your Access Code</h2>
-  <form id="accessForm">
-    <input type="text" id="accessCode" placeholder="Enter your access code" required>
-    <button type="submit">Submit</button>
-  </form>
-
-  <div id="embed-container"></div>
+  <div class="box">
+    <h2>Enter Your Access Code</h2>
+    <input type="text" id="accessCode" placeholder="Access Code">
+    <br>
+    <button onclick="goToFilteredView()">Submit</button>
+  </div>
 
   <script>
-    document.getElementById('accessForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
+    function goToFilteredView() {
       const code = document.getElementById('accessCode').value.trim();
-      if (!code) return;
+      if (!code) {
+        alert("Please enter your access code.");
+        return;
+      }
 
-      // Build dynamic embed script with access code filter
-      const embedContainer = document.getElementById('embed-container');
-      embedContainer.innerHTML = ''; // Clear any previous script
+      // Build the TeamDesk view URL with your view ID and field filter
+      const baseUrl = "https://www.teamdesk.net/secure/embedded/db/98595/view.aspx";
+      const viewId = "12954732"; // Your view ID
+      const filterFieldId = "63119127"; // Field ID for 'AccessCode' or equivalent
 
-      const script = document.createElement('script');
-      script.src = "https://www.teamdesk.net/secure/embed.js";
-      script.setAttribute("data-url", `/ev-12954732/db/98595/view.aspx?FilterField=AccessCode&FilterValue=${encodeURIComponent(code)}`);
-      embedContainer.appendChild(script);
-    });
+      // Construct final URL
+      const url = `${baseUrl}?fid_${filterFieldId}=${encodeURIComponent(code)}&id=${viewId}`;
+      window.location.href = url;
+    }
   </script>
 
 </body>
