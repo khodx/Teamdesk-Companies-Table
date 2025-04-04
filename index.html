@@ -2,53 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Access Protected View</title>
+  <title>Access Protected Record</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
     #embed-container {
-      display: none;
-      margin-top: 30px;
+      margin-top: 40px;
     }
 
-    #no-access {
-      color: red;
-      display: none;
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <h2>Enter Access Code to View Data</h2>
+
+  <h2>Enter Your Access Code</h2>
   <form id="accessForm">
     <input type="text" id="accessCode" placeholder="Enter your access code" required>
     <button type="submit">Submit</button>
   </form>
 
-  <p id="no-access">Invalid access code. Please try again.</p>
-
-  <!-- This is where the embedded TeamDesk table will appear -->
-  <div id="embed-container">
-    <script src="https://www.teamdesk.net/secure/embed.js"
-      data-url="/ev-12954732/db/98595/view.aspx"></script>
-  </div>
+  <div id="embed-container"></div>
 
   <script>
-    const allowedCodes = ['ABC123', 'XYZ789', 'LMN456']; // Add your approved access codes here
-
     document.getElementById('accessForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      const code = document.getElementById('accessCode').value.trim().toUpperCase();
 
-      if (allowedCodes.includes(code)) {
-        document.getElementById('embed-container').style.display = 'block';
-        document.getElementById('no-access').style.display = 'none';
-      } else {
-        document.getElementById('embed-container').style.display = 'none';
-        document.getElementById('no-access').style.display = 'block';
-      }
+      const code = document.getElementById('accessCode').value.trim();
+      if (!code) return;
+
+      // Build dynamic embed script with access code filter
+      const embedContainer = document.getElementById('embed-container');
+      embedContainer.innerHTML = ''; // Clear any previous script
+
+      const script = document.createElement('script');
+      script.src = "https://www.teamdesk.net/secure/embed.js";
+      script.setAttribute("data-url", `/ev-12954732/db/98595/view.aspx?FilterField=AccessCode&FilterValue=${encodeURIComponent(code)}`);
+      embedContainer.appendChild(script);
     });
   </script>
+
 </body>
 </html>
