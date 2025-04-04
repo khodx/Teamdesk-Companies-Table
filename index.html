@@ -12,80 +12,22 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 800px;
       margin: auto;
       background: white;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
-
-    input[type="text"] {
-      padding: 12px;
-      width: 80%;
-      font-size: 16px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    button {
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #embed-container {
-      margin-top: 40px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
-    }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>Enter Access Code</h2>
-    <input type="text" id="accessCode" placeholder="ENTER YOUR ACCESS CODE HERE" />
-    <br>
-    <button onclick="loadView()">Submit</button>
-
-    <div id="embed-container"></div>
+    <h2>Company Access Form</h2>
+    <script 
+      src="https://www.teamdesk.net/secure/embed.js" 
+      data-url="/ev-12954732/db/98595/view.aspx?fid_63119127=HVWC-040220251444">
+    </script>
   </div>
-
-  <script>
-    const knownCodes = [
-      'HVWC-040220251444',
-      'XYZ789',
-      'ABC123'
-    ];
-
-    function loadView() {
-      const code = document.getElementById("accessCode").value.trim();
-      const container = document.getElementById("embed-container");
-
-      if (!code || !knownCodes.includes(code)) {
-        alert("Invalid access code. Please try again.");
-        container.innerHTML = "";
-        return;
-      }
-
-      container.innerHTML = "";
-
-      const script = document.createElement("script");
-      script.src = "https://www.teamdesk.net/secure/embed.js";
-      script.setAttribute("data-url", `/ev-12954732/db/98595/view.aspx?fid_63119127=${encodeURIComponent(code)}`);
-      container.appendChild(script);
-    }
-  </script>
-
 </body>
 </html>
