@@ -54,7 +54,7 @@
 
   <div class="container">
     <h2>Enter Access Code</h2>
-    <input type="text" id="accessCode" placeholder="e.g., HVWC-040220251444" />
+    <input type="text" id="accessCode" placeholder="ENTER YOUR ACCESS CODE HERE" />
     <br>
     <button onclick="loadView()">Submit</button>
 
@@ -62,7 +62,6 @@
   </div>
 
   <script>
-    // 🔐 Replace this list with your actual valid access codes
     const knownCodes = [
       'HVWC-040220251444',
       'XYZ789',
@@ -83,8 +82,6 @@
 
       const script = document.createElement("script");
       script.src = "https://www.teamdesk.net/secure/embed.js";
-
-      // Change this to match your actual embed view ID
       script.setAttribute("data-url", `/ev-12954732/db/98595/view.aspx?fid_63119127=${encodeURIComponent(code)}`);
       container.appendChild(script);
     }
