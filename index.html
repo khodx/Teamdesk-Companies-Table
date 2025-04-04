@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Protected View</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #embed-container {
+      display: none;
+      margin-top: 30px;
+    }
+
+    #no-access {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter Access Code to View Data</h2>
+  <form id="accessForm">
+    <input type="text" id="accessCode" placeholder="Enter your access code" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="no-access">Invalid access code. Please try again.</p>
+
+  <!-- This is where the embedded TeamDesk table will appear -->
+  <div id="embed-container">
+    <script src="https://www.teamdesk.net/secure/embed.js"
+      data-url="/ev-12954732/db/98595/view.aspx"></script>
+  </div>
+
+  <script>
+    const allowedCodes = ['ABC123', 'XYZ789', 'LMN456']; // Add your approved access codes here
+
+    document.getElementById('accessForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const code = document.getElementById('accessCode').value.trim().toUpperCase();
+
+      if (allowedCodes.includes(code)) {
+        document.getElementById('embed-container').style.display = 'block';
+        document.getElementById('no-access').style.display = 'none';
+      } else {
+        document.getElementById('embed-container').style.display = 'none';
+        document.getElementById('no-access').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
