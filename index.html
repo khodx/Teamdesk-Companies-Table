@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Access My Record</title>
+  <title>Secure Company Lookup</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f8fb;
+      background-color: #f5f8fa;
       text-align: center;
       padding: 60px 20px;
     }
 
     .container {
+      max-width: 500px;
+      margin: auto;
       background: white;
       padding: 30px;
-      margin: auto;
-      max-width: 600px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
     input[type="text"] {
       padding: 12px;
-      font-size: 16px;
       width: 80%;
+      font-size: 16px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 6px;
@@ -32,7 +32,7 @@
     button {
       padding: 12px 24px;
       font-size: 16px;
-      background-color: #0078d4;
+      background-color: #0077cc;
       color: white;
       border: none;
       border-radius: 6px;
@@ -53,8 +53,8 @@
 <body>
 
   <div class="container">
-    <h2>Enter Your Access Code</h2>
-    <input type="text" id="accessCode" placeholder="e.g., HVWC-040220251444">
+    <h2>Enter Access Code</h2>
+    <input type="text" id="accessCode" placeholder="e.g., HVWC-040220251444" />
     <br>
     <button onclick="loadView()">Submit</button>
 
@@ -62,18 +62,29 @@
   </div>
 
   <script>
+    // 🔐 Replace this list with your actual valid access codes
+    const knownCodes = [
+      'HVWC-040220251444',
+      'XYZ789',
+      'ABC123'
+    ];
+
     function loadView() {
       const code = document.getElementById("accessCode").value.trim();
-      if (!code) {
-        alert("Please enter your access code.");
+      const container = document.getElementById("embed-container");
+
+      if (!code || !knownCodes.includes(code)) {
+        alert("Invalid access code. Please try again.");
+        container.innerHTML = "";
         return;
       }
 
-      const container = document.getElementById("embed-container");
-      container.innerHTML = ""; // Clear previous view
+      container.innerHTML = "";
 
       const script = document.createElement("script");
       script.src = "https://www.teamdesk.net/secure/embed.js";
+
+      // Change this to match your actual embed view ID
       script.setAttribute("data-url", `/ev-12954732/db/98595/view.aspx?fid_63119127=${encodeURIComponent(code)}`);
       container.appendChild(script);
     }
